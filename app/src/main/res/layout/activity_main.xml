@@ -60,7 +60,7 @@
             android:layout_marginTop="16dp"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnDatePicker"
             android:text="SELECT DATE"
             android:textSize="18sp"
             android:textColor="@color/lightGrey"
