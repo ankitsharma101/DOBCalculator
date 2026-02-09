@@ -7,15 +7,24 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import android.app.DatePickerDialog
+import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.util.Calendar
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
+
+    private var tvSelectedDate : TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         enableEdgeToEdge()
+
+        val btnDatePicker : Button = findViewById(R.id.btnDatePicker)
+        tvSelectedDate = findViewById(R.id.tvSelectedDate)
 
         val mainLayout = findViewById<View>(R.id.main)
 
@@ -38,16 +47,24 @@ class MainActivity : ComponentActivity() {
     }
 
     fun clickDatePicker(){
-
         val myCalendar = Calendar.getInstance()
         val year = myCalendar.get(Calendar.YEAR)
         val month = myCalendar.get(Calendar.MONTH)
         val day = myCalendar.get(Calendar.DAY_OF_MONTH)
         DatePickerDialog( this,
-            DatePickerDialog.OnDateSetListener{view, year, month, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener{view, selectedYear, selectedMonth, selectedDayOfMonth ->
                 Toast.makeText(this,
-                    "btnDatePicker pressed", Toast.LENGTH_LONG).show()
+                    "Year was $selectedYear, month was ${selectedMonth+1}"+
+                    ", day of month was $selectedDayOfMonth",
+                    Toast.LENGTH_LONG).show()
 
+                val selectedDate = "$selectedDayOfMonth/${selectedMonth+1}/${selectedYear}"
+
+                tvSelectedDate?.text=selectedDate
+
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+
+                val theDate = sdf.parse(selectedDate)
             },
             year,
             month,
